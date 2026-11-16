@@ -1945,8 +1945,8 @@
     "signature": "MenuItemAttribute(string itemName)",
     "params": [
      {
-      "name": "this(itemName",
-      "type": "string itemName) :",
+      "name": "itemName",
+      "type": "string",
       "default": null
      }
     ],
@@ -1967,8 +1967,8 @@
       "default": null
      },
      {
-      "name": "this(itemName",
-      "type": "bool isValidateFunction) :",
+      "name": "isValidateFunction",
+      "type": "bool",
       "default": null
      }
     ],
@@ -9988,8 +9988,8 @@
     "signature": "GameObject(string name)",
     "params": [
      {
-      "name": "this(MakeNative(name)",
-      "type": "string name) :",
+      "name": "name",
+      "type": "string",
       "default": null
      }
     ],
@@ -10003,13 +10003,7 @@
     "type": "",
     "static": false,
     "signature": "GameObject()",
-    "params": [
-     {
-      "name": "this(\"\"",
-      "type": ") :",
-      "default": null
-     }
-    ],
+    "params": [],
     "readonly": false,
     "protected": false,
     "summary": ""
@@ -20015,8 +20009,8 @@
     "signature": "Rng(int seed)",
     "params": [
      {
-      "name": "this((ulong)(uint)seed",
-      "type": "int seed) :",
+      "name": "seed",
+      "type": "int",
       "default": null
      }
     ],
@@ -21642,20 +21636,30 @@
    },
    {
     "kind": "method",
-    "name": "List",
-    "type": "",
+    "name": "Turtle",
+    "type": "List<(Vector2 a, Vector2 b)>",
     "static": true,
     "signature": "static List<(Vector2 a, Vector2 b)> Turtle(string commands, float step = 1f, float angleDeg = 25f, float startAngleDeg = 90f)",
     "params": [
      {
-      "name": "a",
-      "type": "Vector2",
+      "name": "commands",
+      "type": "string",
       "default": null
      },
      {
       "name": "step",
-      "type": "Vector2 b)> Turtle(string commands, float",
-      "default": "1f, float angleDeg = 25f, float startAngleDeg = 90f"
+      "type": "float",
+      "default": "1f"
+     },
+     {
+      "name": "angleDeg",
+      "type": "float",
+      "default": "25f"
+     },
+     {
+      "name": "startAngleDeg",
+      "type": "float",
+      "default": "90f"
      }
     ],
     "readonly": false,
@@ -22287,8 +22291,8 @@
     "signature": "MeshInstance(GpuMesh mesh)",
     "params": [
      {
-      "name": "this(",
-      "type": "GpuMesh mesh) :",
+      "name": "mesh",
+      "type": "GpuMesh",
       "default": null
      }
     ],
@@ -44179,10 +44183,10 @@
    },
    {
     "kind": "field",
-    "name": "public Vector3 leftGround",
-    "type": "[HideInInspector]",
+    "name": "leftGround",
+    "type": "Vector3",
     "static": false,
-    "signature": "[HideInInspector] public Vector3 leftGround",
+    "signature": "Vector3 leftGround",
     "params": [],
     "readonly": false,
     "protected": false,
@@ -44191,9 +44195,9 @@
    {
     "kind": "field",
     "name": "rightGround",
-    "type": "[HideInInspector]",
+    "type": "Vector3",
     "static": false,
-    "signature": "[HideInInspector] rightGround",
+    "signature": "Vector3 rightGround",
     "params": [],
     "readonly": false,
     "protected": false,
@@ -44201,10 +44205,10 @@
    },
    {
     "kind": "field",
-    "name": "public bool leftHit",
-    "type": "[HideInInspector]",
+    "name": "leftHit",
+    "type": "bool",
     "static": false,
-    "signature": "[HideInInspector] public bool leftHit",
+    "signature": "bool leftHit",
     "params": [],
     "readonly": false,
     "protected": false,
@@ -44213,9 +44217,9 @@
    {
     "kind": "field",
     "name": "rightHit",
-    "type": "[HideInInspector]",
+    "type": "bool",
     "static": false,
-    "signature": "[HideInInspector] rightHit",
+    "signature": "bool rightHit",
     "params": [],
     "readonly": false,
     "protected": false,
@@ -54375,8 +54379,8 @@
       "default": null
      },
      {
-      "name": "this(w",
-      "type": "int h) :",
+      "name": "h",
+      "type": "int",
       "default": null
      }
     ],
@@ -54412,8 +54416,8 @@
       "default": null
      },
      {
-      "name": "this(w",
-      "type": "bool linear) :",
+      "name": "linear",
+      "type": "bool",
       "default": null
      }
     ],
@@ -54449,13 +54453,8 @@
       "default": null
      },
      {
-      "name": "this(w",
-      "type": "bool linear) :",
-      "default": null
-     },
-     {
-      "name": "1",
-      "type": "mipCount >",
+      "name": "linear",
+      "type": "bool",
       "default": null
      }
     ],
@@ -55310,8 +55309,8 @@
     "signature": "PhysicMaterial(string n)",
     "params": [
      {
-      "name": "base(n",
-      "type": "string n) :",
+      "name": "n",
+      "type": "string",
       "default": null
      }
     ],
@@ -75134,8 +75133,8 @@
     "signature": "AxisEventData(EventSystem es)",
     "params": [
      {
-      "name": "base(es",
-      "type": "EventSystem es) :",
+      "name": "es",
+      "type": "EventSystem",
       "default": null
      }
     ],
@@ -75189,8 +75188,8 @@
     "signature": "PointerEventData(EventSystem es)",
     "params": [
      {
-      "name": "base(es",
-      "type": "EventSystem es) :",
+      "name": "es",
+      "type": "EventSystem",
       "default": null
      }
     ],

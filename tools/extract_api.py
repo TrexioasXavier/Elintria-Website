@@ -86,7 +86,13 @@ def parse_member(decl, type_name, kind):
     is_protected = d.startswith('public protected ')
     if is_protected: d = 'public ' + d[len('public protected '):]
     head, body = split_body(d)
-    pre_paren = head.split('(')[0]
+    head = re.sub(r'\)\s*:\s*(base|this)\s*\(.*$', ')', head)      # constructor chains
+    depth, pstart = 0, -1
+    for i, ch in enumerate(head):
+        if ch == '<': depth += 1
+        elif ch == '>': depth -= 1
+        elif ch == '(' and depth == 0: pstart = i; break
+    pre_paren = head[:pstart] if pstart >= 0 else head
     is_static = bool(re.search(r'\b(static|const)\b', pre_paren))
     m_kind, name, mtype = "field", None, ""
     readonly = False
@@ -123,7 +129,7 @@ def parse_member(decl, type_name, kind):
         if m_kind == "field" and re.search(r'\breadonly\b', pre_paren): readonly = True
     params = []
     if m_kind in ("method", "constructor", "operator") and '(' in head:
-        inner = head[head.index('(') + 1: head.rindex(')')] if ')' in head else ""
+        inner = head[pstart + 1: head.rindex(')')] if pstart >= 0 and ')' in head else ""
         depth, cur, items = 0, "", []
         for ch in inner:
             if ch in '<([': depth += 1
@@ -250,7 +256,8 @@ def parse_file(path, source_tag):
             doc = clean_comment(collecting["comments"]) or trailing.strip()
             names = [mm["name"]]
             if mm["kind"] == "field" and ',' in (text.split('=')[0]) and '(' not in text:
-                head = re.sub(r'^public\s+', '', text.split(';')[0])
+                head = re.sub(r'^(\[[^\]]*\]\s*)+', '', text.split(';')[0])
+                head = re.sub(r'^public\s+', '', head)
                 head = re.sub(r'\b' + KEYWORDS + r'\b\s*', '', head).strip()
                 tparts = head.split(' ', 1)
                 if len(tparts) == 2:

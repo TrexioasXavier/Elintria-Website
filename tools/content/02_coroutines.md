@@ -188,36 +188,46 @@ public class Respawn : ElintriaScript
 > note: Coroutines stop when their object is deactivated. For a respawn like this, run the coroutine on a manager object that stays active.
 
 # WaitForSecondsRealtime
-summary: Pauses a coroutine for real seconds, even while the game is paused with timeScale.
+summary: Pauses a coroutine for a number of seconds; kept for Unity code, and currently the same as WaitForSeconds.
 see: WaitForSeconds, Time
 
-Like [[WaitForSeconds]], but measured in real time, so it keeps counting when [[Time.timeScale]] is 0. Use it for pause menus, slow-motion effects and UI timers.
+In Unity this waits in real time, ignoring [[Time.timeScale]]. In Elintria it is currently measured the same way as [[WaitForSeconds]], so code written for Unity compiles and runs, but the wait slows down with the game.
+
+> warning: Don't use it to un-pause a game you paused with `Time.timeScale = 0`, because the wait would never finish. Time real seconds in `Update` with `System.Diagnostics.Stopwatch` instead (see the third example).
 
 ## Members
-WaitForSecondsRealtime: Makes a wait of `s` real seconds.
-@s: How long to wait, in real seconds.
+WaitForSecondsRealtime: Makes a wait of `s` seconds.
+@s: How long to wait, in seconds.
 
-## Example: A hit-stop effect
-file: Scripts/HitStop.cs
-Freezes the game for a fraction of a second on a heavy hit, then resumes. The wait must be real-time, or it would never end.
+## Example: Unity code that runs unchanged
+file: Scripts/IntroText.cs
 ```csharp
 using System.Collections;
 using Elintria;
 
-public class HitStop : ElintriaScript
+public class IntroText : ElintriaScript
 {
-    public void Freeze(float seconds) { StartCoroutine(Run(seconds)); }
+    string line;
 
-    IEnumerator Run(float seconds)
+    public override void Start() { StartCoroutine(Run()); }
+
+    IEnumerator Run()
     {
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(seconds);
-        Time.timeScale = 1f;
+        line = "Chapter One";
+        yield return new WaitForSecondsRealtime(2f);
+        line = "The Old Mill";
+        yield return new WaitForSecondsRealtime(2f);
+        line = null;
+    }
+
+    public override void Update()
+    {
+        if (line != null) ScreenGUI.Label(new Rect(0, 80, ScreenGUI.screenWidth, 40), line, null, Color.white, TextAnchor.MiddleCenter);
     }
 }
 ```
 
-## Example: A toast message while paused
+## Example: A toast message
 file: Scripts/Toast.cs
 ```csharp
 using System.Collections;
@@ -243,24 +253,32 @@ public class Toast : ElintriaScript
 }
 ```
 
-## Example: Slow motion for a set real time
-file: Scripts/BulletTime.cs
+## Example: Timing a hit-stop without a coroutine
+file: Scripts/HitStop.cs
+While the game is frozen, `Time.time` stands still but `Update` keeps running, so a `Stopwatch` measures the real time and `Update` ends the freeze.
 ```csharp
-using System.Collections;
+using System.Diagnostics;
 using Elintria;
 
-public class BulletTime : ElintriaScript
+public class HitStop : ElintriaScript
 {
-    public override void Update()
+    readonly Stopwatch frozenFor = new Stopwatch();
+    float length;
+
+    public void Freeze(float seconds)
     {
-        if (Input.GetKeyDown(KeyCode.F)) StartCoroutine(Slow());
+        length = seconds;
+        Time.timeScale = 0f;
+        frozenFor.Restart();
     }
 
-    IEnumerator Slow()
+    public override void Update()
     {
-        Time.timeScale = 0.2f;
-        yield return new WaitForSecondsRealtime(3f);   // 3 real seconds, not 3 slowed ones
-        Time.timeScale = 1f;
+        if (frozenFor.IsRunning && frozenFor.Elapsed.TotalSeconds >= length)
+        {
+            frozenFor.Reset();
+            Time.timeScale = 1f;
+        }
     }
 }
 ```
@@ -269,7 +287,7 @@ public class BulletTime : ElintriaScript
 summary: Pauses a coroutine until everything this frame has updated.
 see: WaitForFixedUpdate, Coroutine
 
-`yield return new WaitForEndOfFrame();` resumes the coroutine after all of this frame's updates, just before the next frame starts. It is useful for reading final positions or taking a screenshot of what was drawn.
+`yield return new WaitForEndOfFrame();` is kept so Unity code compiles. In Elintria the coroutine resumes on the next frame, the same as `yield return null`. Use it to spread work over frames, or to act once the current frame is done.
 
 ## Example: Capturing a screenshot after the frame
 file: Scripts/PhotoMode.cs
@@ -343,7 +361,7 @@ public class LazyBuilder : ElintriaScript
 summary: Pauses a coroutine until the next physics step.
 see: WaitForEndOfFrame, Rigidbody
 
-`yield return new WaitForFixedUpdate();` resumes the coroutine on the next physics step. Use it when a coroutine applies forces or reads physics results.
+`yield return new WaitForFixedUpdate();` is kept so Unity code compiles. In Elintria the coroutine resumes on the next frame (not exactly on the next physics step), the same as `yield return null`. For work that must run once per physics step, override `FixedUpdate` instead.
 
 ## Example: Applying a force over several physics steps
 file: Scripts/Thruster.cs

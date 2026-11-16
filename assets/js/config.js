@@ -2,12 +2,12 @@
 window.ELINTRIA_SITE = {
   name: "Elintria Engine",
   version: "2026.11",
-  // The public website repository on GitHub. Its Releases page carries the engine download.
-  repo: "https://github.com/TrexioasXavier/elintria-website",
-  // Latest release's ElintriaEngine.zip (GitHub redirects /latest/download/<file> to the newest release).
-  download: "https://github.com/TrexioasXavier/elintria-website/releases/latest/download/ElintriaEngine.zip",
-  releases: "https://github.com/TrexioasXavier/elintria-website/releases",
-  site: "https://trexioasxavier.github.io/elintria-website/"
+  // The engine's GitHub repository. Its Releases page carries the engine download.
+  repo: "https://github.com/TrexioasXavier/ElintriaGameEngine",
+  // The newest release (GitHub redirects /releases/latest to it).
+  download: "https://github.com/TrexioasXavier/ElintriaGameEngine/releases/latest",
+  releases: "https://github.com/TrexioasXavier/ElintriaGameEngine/releases",
+  site: "https://trexioasxavier.github.io/Elintria-Website/"
 };
 
 /* Wire every [data-link] element to the matching setting. */

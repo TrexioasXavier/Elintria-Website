@@ -9,6 +9,7 @@ From inside a script, `gameObject` and `transform` give you the object the scrip
 > note: Override the lifecycle methods with `public override void Update()`. Writing a new method with the same name, without `override`, never gets called.
 
 ## Members
+GetComponent: The first component of type `T` on this script's object, or null. `T` can be an engine component (Rigidbody, Light...) or another script.
 Start: Called once, just before the script's first Update, when Play mode (or the built game) starts or when the object is created. Most setup goes here.
 Update: Called once per frame while the game runs. Read input and move things here, scaling by [[Time.deltaTime]] so speed does not depend on frame rate.
 Awake: Called once when the script is created, before any Start, even when the script starts disabled. Use it to cache components on the same object.
@@ -180,6 +181,7 @@ Use the static methods to find objects (`Find`, `FindWithTag`) and to make new o
 > warning: Once destroyed, a GameObject reference stays non-null in C#. Test `IsAlive` (or `if (obj)`) before using one you kept from an earlier frame.
 
 ## Members
+SendMessage: Calls the method `methodName` on every script on this object, passing `value` when given. Objects without such a method are skipped silently.
 transform: The object's [[Transform]]: position, rotation, scale and parent. Every GameObject has exactly one.
 name: The object's name, as shown in the Hierarchy and used by Find.
 GetInstanceID: A number that identifies this object while it exists. Two references to the same object give the same id.
@@ -344,6 +346,7 @@ The hierarchy lives here too: `parent`, `childCount`, `GetChild`, `Find` and `Se
 Elintria's convention is that +Z is an object's forward and +Y is up. Cameras and lights look down their -Z.
 
 ## Members
+parent: The Transform this one is under, or null for a root object. Setting it re-parents the object, keeping its world position.
 position: The object's position in world space. Setting it moves the object (and its children) at once.
 forward: The object's forward direction (+Z) in world space, unit length. Setting it turns the object to face that way.
 right: The object's right direction (+X) in world space, unit length.
@@ -1015,13 +1018,15 @@ see: ElintriaScript, Mathf
 
 Multiply anything that changes "per second" by `Time.deltaTime`, the seconds since the last frame, so the game runs at the same speed on every frame rate. `Time.time` counts seconds since play started. Set `Time.timeScale` to slow the game down, speed it up, or pause it at 0.
 
+> note: `time` and `deltaTime` are both scaled by `timeScale`. While it is 0, `Update` still runs (so menus work), but `deltaTime` is 0 and `time` stands still. The "unscaled" members are kept for Unity code and currently return the scaled values, so for real elapsed time use `System.Diagnostics.Stopwatch`.
+
 ## Members
 fixedDeltaTime: The interval between physics steps, in seconds. Use it inside FixedUpdate.
-unscaledTime: Seconds since play started, ignoring timeScale. Keeps counting while the game is paused.
-unscaledDeltaTime: The seconds since the last frame, ignoring timeScale. Use it for menus and effects that keep moving during a pause.
-realtimeSinceStartup: Real seconds since the game started, unaffected by timeScale or pauses.
-fixedTime: The time the current physics step represents.
-smoothDeltaTime: deltaTime averaged over recent frames, for display (an FPS counter).
+unscaledTime: Kept for Unity code. In Elintria it currently returns the same as `time`, so it slows and stops with timeScale too.
+unscaledDeltaTime: Kept for Unity code. It currently returns the same as `deltaTime` (0 while paused).
+realtimeSinceStartup: Kept for Unity code. It currently returns the same as `time`. For real elapsed time, use `System.Diagnostics.Stopwatch`.
+fixedTime: Kept for Unity code. It currently returns the same as `time`.
+smoothDeltaTime: Kept for Unity code. It currently returns `deltaTime` without smoothing.
 maximumDeltaTime: The longest deltaTime a single frame reports, so one long hitch does not move things too far.
 
 ## Example: Frame-rate independent movement
@@ -1044,13 +1049,15 @@ public class Conveyor : ElintriaScript
 
 ## Example: Pause menu with timeScale
 file: Scripts/PauseMenu.cs
-Setting `timeScale` to 0 freezes everything driven by `deltaTime`; the menu itself uses `unscaledTime` so its pulse keeps animating.
+Setting `timeScale` to 0 freezes everything driven by `deltaTime`. `Update` keeps running, so the menu can still read keys and draw. A `Stopwatch` measures real time for the pulse, because `Time.time` stands still during the pause.
 ```csharp
+using System.Diagnostics;
 using Elintria;
 
 public class PauseMenu : ElintriaScript
 {
     bool paused;
+    readonly Stopwatch clock = Stopwatch.StartNew();
 
     public override void Update()
     {
@@ -1062,7 +1069,7 @@ public class PauseMenu : ElintriaScript
         }
         if (paused)
         {
-            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 4f);
+            float pulse = 0.5f + 0.5f * Mathf.Sin((float)clock.Elapsed.TotalSeconds * 4f);
             ScreenGUI.Label(new Rect(20, 20, 300, 40), "PAUSED", null, new Color(1f, 1f, 1f, pulse));
         }
     }
@@ -1082,7 +1089,7 @@ public class SlowMo : ElintriaScript
     {
         Time.timeScale = Input.GetKey(KeyCode.Q) ? slowScale : 1f;
 
-        float fps = Time.smoothDeltaTime > 0f ? 1f / Time.smoothDeltaTime : 0f;
+        float fps = Time.deltaTime > 0f ? Time.timeScale / Time.deltaTime : 0f;
         ScreenGUI.Text(10, 10, "FPS " + Mathf.RoundToInt(fps) + "   frame " + Time.frameCount +
                                "   played " + Time.time.ToString("0.0") + " s");
     }
@@ -1160,9 +1167,9 @@ public class DailyChallenge : ElintriaScript
     public override void Start()
     {
         int seed = DateTime.UtcNow.Year * 1000 + DateTime.UtcNow.DayOfYear;
-        Random.InitState(seed);
+        Elintria.Random.InitState(seed);   // "Elintria." because System also has a Random
         for (int i = 0; i < 5; i++)
-            Debug.Log("Enemy " + i + " at " + (Random.onUnitSphere * 20f));
+            Debug.Log("Enemy " + i + " at " + (Elintria.Random.onUnitSphere * 20f));
     }
 }
 ```
@@ -1306,6 +1313,9 @@ see: Content
 `Json.Parse` turns JSON text into plain C# values: `Dictionary<string, object>` for objects, `List<object>` for arrays, and `string`, `double`, `bool` or `null` for the rest. `Json.Stringify` writes them back. The `Str`, `Float`, `Int`, `Bool`, `List`, `Obj` and `Strings` helpers read a key from a dictionary and fall back to a default when it is missing.
 
 ## Members
+Parse: The value `text` holds: dictionaries, lists, strings, numbers (double), bools or null. Throws FormatException, naming the line, when it is not JSON.
+Stringify: `value` written as JSON text; `pretty` indents it two spaces a level.
+Str: `d[key]` as a string, or `def` when it is missing or null.
 Float: `d[key]` as a float, or `def` when it is missing or not a number.
 Int: `d[key]` as an int, or `def` when it is missing or not a number.
 Bool: `d[key]` as a bool, or `def` when it is missing.

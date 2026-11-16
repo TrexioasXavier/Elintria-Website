@@ -215,6 +215,11 @@ PARAMS = {
     "title": "The window or dialog title.", "ok": "The confirm button's label.", "cancel": "The cancel button's label (empty for none).",
     "px": "A size in pixels.", "type": "The kind of message.", "bold": "Whether the text is bold.", "style": "One of the style constants.",
     "dim": "Whether the text is greyed out.", "align": "0 left, 1 centre, 2 right.", "open_": "",
+    "g": "Green, 0..1.", "h": "The height.", "tag": "The tag to look for, such as \"Enemy\".",
+    "recursive": "Also list files in sub-folders.", "relative": "A project-relative path such as \"Assets/Levels/1.json\".",
+    "shadow": "A colour to draw a one-pixel drop shadow in, or null for none.", "mesh": "The mesh to use (null clears it).",
+    "nx": "The new x.", "ny": "The new y.", "nz": "The new z.", "map": "The layer weights, as [y, x, layer].",
+    "heights": "The heights, 0..1, as [y, x].", "xBase": "The first column of samples.", "yBase": "The first row of samples.",
 }
 
 
@@ -354,7 +359,7 @@ def parse_content():
                         if not l.strip(): continue
                         if l.startswith("@"):
                             pn, _, pd = l[1:].partition(":")
-                            if last: entry["params"].setdefault(last, {})[pn.strip()] = pd.strip()
+                            entry["params"].setdefault(last or "", {})[pn.strip()] = pd.strip()
                             continue
                         if l.startswith("=>"):
                             if last: entry["returns"][last] = l[2:].strip()
@@ -491,7 +496,13 @@ def main():
                 if "(" in k and any(k.replace(" ", "") in sig.replace(" ", "") for sig in g["s"]):
                     extra.append(cm[k])
             extracted = " ".join(dict.fromkeys(s for _, s in g["summary"]))
+            extracted = re.sub(r'\|([\w\.\[\]]+)\|', r'`\1`', extracted)   # source comments write names as |name|
             desc = cm.get(n) or extracted or None
+            if desc is None and any(re.search(r'\boverride\b', s_) for s_ in g["s"]):
+                b_ = re.sub(r'<.*$', '', (t["base"] or "").split(",")[0].strip())
+                while desc is None and b_ in by_simple:
+                    desc = ((content.get(b_) or {}).get("members") or {}).get(n)
+                    b_ = re.sub(r'<.*$', '', (by_simple[b_]["base"] or "").split(",")[0].strip())
             if desc is None and n in COMMON: desc = COMMON[n].replace("{T}", tname)
             if desc is None and n.startswith("operator"):
                 desc = "The `" + n.replace("operator ", "") + "` operator on " + tname + " values."
@@ -505,8 +516,10 @@ def main():
             for k, v in c["params"].items():
                 if k == n or ("(" in k and any(k.replace(" ", "") in s.replace(" ", "") for s in g["s"])):
                     pnotes.update(v)
+            type_notes = {}
+            for v in c["params"].values(): type_notes.update(v)
             for p in g["params"]:
-                pd = pnotes.get(p["name"]) or PARAMS.get(p["name"]) or ""
+                pd = pnotes.get(p["name"]) or type_notes.get(p["name"]) or PARAMS.get(p["name"]) or ""
                 if not pd:
                     pd = "The " + camel_words(p["name"]) + "."
                     problems.append("param without description: %s.%s(%s)" % (simple, n, p["name"]))
@@ -524,6 +537,8 @@ def main():
         enum_vals = []
         for v in t["enumValues"] or []:
             vd = c["members"].get(v["name"]) or v["summary"] or ""
+            if not vd and "*" in c["members"]:
+                vd = c["members"]["*"].replace("{name}", v["name"]).replace("{words}", camel_words(v["name"]))
             if not vd: problems.append("enum value without description: %s.%s" % (simple, v["name"]))
             enum_vals.append({"n": v["name"], "v": v["value"], "d": inline(vd)})
         exs = []

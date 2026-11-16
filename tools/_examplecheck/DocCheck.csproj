@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0649;CS0414;CS0169;CS0168;CS0219;CS0162;CS0108;CS0114</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="C:\Users\trexi\Desktop\Editors\Visual Studio\Projects\ElintriaGameEngine\Engine\ElintriaGameEngine\Packages\Standard\csharp\*.cs" />
+    <Reference Include="ElintriaSharp"><HintPath>C:\Users\trexi\Desktop\Editors\Visual Studio\Projects\ElintriaGameEngine\Engine\ElintriaGameEngine\ElintriaSharp\obj\Release\ElintriaSharp.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
