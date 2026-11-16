@@ -14691,6 +14691,875 @@
   "public": true
  },
  {
+  "name": "LevelMarker",
+  "simple": "LevelMarker",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [
+   "sealed"
+  ],
+  "base": "",
+  "summary": "A spot the generator marked: a spawn, a pickup, a light, a key...",
+  "members": [
+   {
+    "kind": "field",
+    "name": "kind",
+    "type": "string",
+    "static": false,
+    "signature": "string kind",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "PlayerStart, Enemy, Boss, Loot, Exit, Light, Key, LockedDoor, Lever, MiniBoss, Objective, Npc, Plate, Ambient, Waypoint, Hazard, Puzzle, Checkpoint or Note."
+   },
+   {
+    "kind": "field",
+    "name": "position",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 position",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "yaw",
+    "type": "float",
+    "static": false,
+    "signature": "float yaw",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Degrees about +Y."
+   },
+   {
+    "kind": "field",
+    "name": "room",
+    "type": "int",
+    "static": false,
+    "signature": "int room",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "floor",
+    "type": "int",
+    "static": false,
+    "signature": "int floor",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "count",
+    "type": "int",
+    "static": false,
+    "signature": "int count",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "item",
+    "type": "string",
+    "static": false,
+    "signature": "string item",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A pickup's or key's item id, a door's key."
+   },
+   {
+    "kind": "field",
+    "name": "color",
+    "type": "Color",
+    "static": false,
+    "signature": "Color color",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A light's colour, brightness and reach."
+   },
+   {
+    "kind": "field",
+    "name": "intensity",
+    "type": "float",
+    "static": false,
+    "signature": "float intensity",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "range",
+    "type": "float",
+    "static": false,
+    "signature": "float range",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "anim",
+    "type": "int",
+    "static": false,
+    "signature": "int anim",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A light's animation: 0 steady, 1 flickers, 2 strobes."
+   },
+   {
+    "kind": "field",
+    "name": "text",
+    "type": "string",
+    "static": false,
+    "signature": "string text",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A note's words; a puzzle door's lever order or code."
+   },
+   {
+    "kind": "field",
+    "name": "size",
+    "type": "Vector2",
+    "static": false,
+    "signature": "Vector2 size",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A hazard's or door's size across (x: width, y: depth), metres."
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelGenSettings",
+  "simple": "LevelGenSettings",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [
+   "sealed"
+  ],
+  "base": "",
+  "summary": "Values for the generator, built up in code.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "description",
+    "type": "string",
+    "static": false,
+    "signature": "string description",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A plain-English description, read first (\"large dark bunker, two floors\")."
+   },
+   {
+    "kind": "constructor",
+    "name": "LevelGenSettings",
+    "type": "",
+    "static": false,
+    "signature": "LevelGenSettings()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "constructor",
+    "name": "LevelGenSettings",
+    "type": "",
+    "static": false,
+    "signature": "LevelGenSettings(string description)",
+    "params": [
+     {
+      "name": "description",
+      "type": "string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Set",
+    "type": "LevelGenSettings",
+    "static": false,
+    "signature": "LevelGenSettings Set(string key, object value)",
+    "params": [
+     {
+      "name": "key",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "value",
+      "type": "object",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "Sets any value by its key: \"seed\", \"theme\", \"rooms\", \"floors\", or an option (\"mission\", \"style\", \"vertical\"...). Booleans are written 1 / 0."
+   },
+   {
+    "kind": "method",
+    "name": "Seed",
+    "type": "LevelGenSettings",
+    "static": false,
+    "signature": "LevelGenSettings Seed(int seed)",
+    "params": [
+     {
+      "name": "seed",
+      "type": "int",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Theme",
+    "type": "LevelGenSettings",
+    "static": false,
+    "signature": "LevelGenSettings Theme(string theme)",
+    "params": [
+     {
+      "name": "theme",
+      "type": "string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Rooms",
+    "type": "LevelGenSettings",
+    "static": false,
+    "signature": "LevelGenSettings Rooms(int rooms)",
+    "params": [
+     {
+      "name": "rooms",
+      "type": "int",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Floors",
+    "type": "LevelGenSettings",
+    "static": false,
+    "signature": "LevelGenSettings Floors(int floors)",
+    "params": [
+     {
+      "name": "floors",
+      "type": "int",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Values",
+    "type": "string",
+    "static": false,
+    "signature": "string Values()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "\"key=value;key=value\"."
+   },
+   {
+    "kind": "method",
+    "name": "ToString",
+    "type": "string",
+    "static": false,
+    "signature": "override string ToString()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "GeneratedLevel",
+  "simple": "GeneratedLevel",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [
+   "sealed"
+  ],
+  "base": "",
+  "summary": "A level made at run time: its markers, its drawn meshes and colliders.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "seed",
+    "type": "int",
+    "static": false,
+    "signature": "int seed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "rooms",
+    "type": "int",
+    "static": false,
+    "signature": "int rooms",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "floors",
+    "type": "int",
+    "static": false,
+    "signature": "int floors",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "floorHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float floorHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "wallHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float wallHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "origin",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 origin",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Where the level was put (added to every position)."
+   },
+   {
+    "kind": "field",
+    "name": "markers",
+    "type": "List<LevelMarker>",
+    "static": false,
+    "signature": "readonly List<LevelMarker> markers",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "meshFiles",
+    "type": "List<string>",
+    "static": false,
+    "signature": "readonly List<string> meshFiles",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The .obj files written for it."
+   },
+   {
+    "kind": "field",
+    "name": "manifest",
+    "type": "string",
+    "static": false,
+    "signature": "string manifest",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The generator's JSON, for anything this class does not read."
+   },
+   {
+    "kind": "field",
+    "name": "lights",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "readonly List<GameObject> lights",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The Light objects made for it (the markers' lights and the fill light)."
+   },
+   {
+    "kind": "field",
+    "name": "modelPieces",
+    "type": "int",
+    "static": false,
+    "signature": "int modelPieces",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Kit pieces and custom props drawn."
+   },
+   {
+    "kind": "property",
+    "name": "playerStart",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 playerStart { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The player start (the origin when there is none)."
+   },
+   {
+    "kind": "property",
+    "name": "exit",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 exit { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The exit, or the origin."
+   },
+   {
+    "kind": "method",
+    "name": "Markers",
+    "type": "List<LevelMarker>",
+    "static": false,
+    "signature": "List<LevelMarker> Markers(string kind)",
+    "params": [
+     {
+      "name": "kind",
+      "type": "string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "Every marker of one kind (\"Enemy\", \"Loot\", \"Light\"...)."
+   },
+   {
+    "kind": "method",
+    "name": "PlaceCopies",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> PlaceCopies(string kind, GameObject template)",
+    "params": [
+     {
+      "name": "kind",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "template",
+      "type": "GameObject",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "A copy of |template| at every marker of |kind|, turned to its yaw. The copies go when the level is destroyed."
+   },
+   {
+    "kind": "method",
+    "name": "SetVisible",
+    "type": "void",
+    "static": false,
+    "signature": "void SetVisible(bool visible)",
+    "params": [
+     {
+      "name": "visible",
+      "type": "bool",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "Shows or hides the drawn meshes (colliders stay)."
+   },
+   {
+    "kind": "method",
+    "name": "Destroy",
+    "type": "void",
+    "static": false,
+    "signature": "void Destroy()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Removes the meshes, colliders and placed copies."
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelGenUtil",
+  "simple": "LevelGenUtil",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [
+   "static"
+  ],
+  "base": "",
+  "summary": "The Visual Scripting nodes' memory: the last level made.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "last",
+    "type": "GeneratedLevel",
+    "static": true,
+    "signature": "static GeneratedLevel last",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The last level LevelGenerator.Generate made."
+   },
+   {
+    "kind": "method",
+    "name": "Place",
+    "type": "int",
+    "static": true,
+    "signature": "static int Place(string kind, string templateName)",
+    "params": [
+     {
+      "name": "kind",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "templateName",
+      "type": "string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Count",
+    "type": "int",
+    "static": true,
+    "signature": "static int Count(string kind)",
+    "params": [
+     {
+      "name": "kind",
+      "type": "string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "DestroyLast",
+    "type": "void",
+    "static": true,
+    "signature": "static void DestroyLast()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelGenerator",
+  "simple": "LevelGenerator",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [
+   "static"
+  ],
+  "base": "",
+  "summary": "Makes levels while the game runs, with the same generator as Window > Level Generator.",
+  "members": [
+   {
+    "kind": "property",
+    "name": "available",
+    "type": "bool",
+    "static": true,
+    "signature": "static bool available { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "Whether the program running the game has the generator."
+   },
+   {
+    "kind": "property",
+    "name": "lastError",
+    "type": "string",
+    "static": true,
+    "signature": "static string lastError { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "Why the last Generate returned null."
+   },
+   {
+    "kind": "method",
+    "name": "BuildManifest",
+    "type": "string",
+    "static": true,
+    "signature": "static string BuildManifest(string description, string values, string outDir, int floor = -1)",
+    "params": [
+     {
+      "name": "description",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "values",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "outDir",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "floor",
+      "type": "int",
+      "default": "-1"
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "Plans and writes the level, returning the generator's JSON (null on failure). |floor| -1 for every floor."
+   },
+   {
+    "kind": "method",
+    "name": "Generate",
+    "type": "GeneratedLevel",
+    "static": true,
+    "signature": "static GeneratedLevel Generate(LevelGenSettings settings, Vector3 origin = default(Vector3), int floor = -1, bool draw = true, bool colliders = true, bool lights = true)",
+    "params": [
+     {
+      "name": "settings",
+      "type": "LevelGenSettings",
+      "default": null
+     },
+     {
+      "name": "origin",
+      "type": "Vector3",
+      "default": "default(Vector3)"
+     },
+     {
+      "name": "floor",
+      "type": "int",
+      "default": "-1"
+     },
+     {
+      "name": "draw",
+      "type": "bool",
+      "default": "true"
+     },
+     {
+      "name": "colliders",
+      "type": "bool",
+      "default": "true"
+     },
+     {
+      "name": "lights",
+      "type": "bool",
+      "default": "true"
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Generate",
+    "type": "GeneratedLevel",
+    "static": true,
+    "signature": "static GeneratedLevel Generate(string description, string values = \"\", Vector3 origin = default(Vector3), int floor = -1, bool draw = true, bool colliders = true, bool lights = true)",
+    "params": [
+     {
+      "name": "description",
+      "type": "string",
+      "default": null
+     },
+     {
+      "name": "values",
+      "type": "string",
+      "default": "\"\""
+     },
+     {
+      "name": "origin",
+      "type": "Vector3",
+      "default": "default(Vector3)"
+     },
+     {
+      "name": "floor",
+      "type": "int",
+      "default": "-1"
+     },
+     {
+      "name": "draw",
+      "type": "bool",
+      "default": "true"
+     },
+     {
+      "name": "colliders",
+      "type": "bool",
+      "default": "true"
+     },
+     {
+      "name": "lights",
+      "type": "bool",
+      "default": "true"
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "A level from a description and/or \"key=value;...\" values, put at |origin|. |draw| draws its meshes (kit pieces and custom props too); |colliders| gives its floors, walls and props box colliders; |lights| makes its Light objects (flicker, strobes, the fill light) and sets the fog. Null (see lastError) when it cannot be made."
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelLightAnimator",
+  "simple": "LevelLightAnimator",
+  "kind": "class",
+  "namespace": "Elintria",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Animates a run-time level's light: 1 flickers (a failing tube), 2 strobes (an alarm). LevelGenerator adds it; the Standard package's Light Flicker does the same in scenes.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "mode",
+    "type": "int",
+    "static": false,
+    "signature": "int mode",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "rate",
+    "type": "float",
+    "static": false,
+    "signature": "float rate",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "minimum",
+    "type": "float",
+    "static": false,
+    "signature": "float minimum",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGenerator.cs",
+  "source": "ElintriaSharp",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
   "name": "Observations",
   "simple": "Observations",
   "kind": "class",
@@ -47469,6 +48338,1345 @@
   "public": true
  },
  {
+  "name": "StdPatrol",
+  "simple": "StdPatrol",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Walks a list of waypoints in turn.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "waypoints",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> waypoints",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "speed",
+    "type": "float",
+    "static": false,
+    "signature": "float speed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Metres per second when there is no Nav Mesh Agent."
+   },
+   {
+    "kind": "field",
+    "name": "waitTime",
+    "type": "float",
+    "static": false,
+    "signature": "float waitTime",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Seconds spent at each waypoint."
+   },
+   {
+    "kind": "field",
+    "name": "loop",
+    "type": "bool",
+    "static": false,
+    "signature": "bool loop",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Off: back and forth along the list instead of round it."
+   },
+   {
+    "kind": "field",
+    "name": "arriveDistance",
+    "type": "float",
+    "static": false,
+    "signature": "float arriveDistance",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "patrolling",
+    "type": "bool",
+    "static": false,
+    "signature": "bool patrolling",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Stops patrolling (a chase script can switch this off and on)."
+   },
+   {
+    "kind": "field",
+    "name": "current",
+    "type": "int",
+    "static": false,
+    "signature": "int current",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelObjective",
+  "simple": "LevelObjective",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "What the level asks of the player, and how far along they are.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "mode",
+    "type": "int",
+    "static": false,
+    "signature": "int mode",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0 none, 1 find items, 2 escape, 3 survive waves, 4 rescue, 5 terminals."
+   },
+   {
+    "kind": "field",
+    "name": "count",
+    "type": "int",
+    "static": false,
+    "signature": "int count",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "How many it takes (items, terminals, survivors)."
+   },
+   {
+    "kind": "field",
+    "name": "itemId",
+    "type": "string",
+    "static": false,
+    "signature": "string itemId",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "targets",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> targets",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The items, terminals or survivors. Items count when picked up (switched off or gone)."
+   },
+   {
+    "kind": "field",
+    "name": "exitPoint",
+    "type": "GameObject",
+    "static": false,
+    "signature": "GameObject exitPoint",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Once the goal is met, reach this to finish the level (optional)."
+   },
+   {
+    "kind": "field",
+    "name": "exitRadius",
+    "type": "float",
+    "static": false,
+    "signature": "float exitRadius",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "showHud",
+    "type": "bool",
+    "static": false,
+    "signature": "bool showHud",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "onCompleteTargets",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> onCompleteTargets",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "onCompleteMessage",
+    "type": "string",
+    "static": false,
+    "signature": "string onCompleteMessage",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "onLevelFinishedTargets",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> onLevelFinishedTargets",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "onLevelFinishedMessage",
+    "type": "string",
+    "static": false,
+    "signature": "string onLevelFinishedMessage",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "progress",
+    "type": "int",
+    "static": false,
+    "signature": "int progress",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "complete",
+    "type": "bool",
+    "static": false,
+    "signature": "bool complete",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "finished",
+    "type": "bool",
+    "static": false,
+    "signature": "bool finished",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Progress",
+    "type": "void",
+    "static": false,
+    "signature": "void Progress()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "One step done (a terminal, a wave set, the escape zone)."
+   },
+   {
+    "kind": "method",
+    "name": "Rescued",
+    "type": "void",
+    "static": false,
+    "signature": "void Rescued()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "A survivor rescued."
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Text",
+    "type": "string",
+    "static": false,
+    "signature": "string Text()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LightFlicker",
+  "simple": "LightFlicker",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "A failing light, or an alarm strobe.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "mode",
+    "type": "int",
+    "static": false,
+    "signature": "int mode",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0 flicker (random dips and cut-outs), 1 strobe (a steady pulse)."
+   },
+   {
+    "kind": "field",
+    "name": "rate",
+    "type": "float",
+    "static": false,
+    "signature": "float rate",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Flicker: how often it dips. Strobe: pulses per second."
+   },
+   {
+    "kind": "field",
+    "name": "minimum",
+    "type": "float",
+    "static": false,
+    "signature": "float minimum",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "How dark the dips go (0 off, 1 not at all)."
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "Ladder",
+  "simple": "Ladder",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Climb: walk into it and hold forward to go up, back to go down.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "height",
+    "type": "float",
+    "static": false,
+    "signature": "float height",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "width",
+    "type": "float",
+    "static": false,
+    "signature": "float width",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "climbSpeed",
+    "type": "float",
+    "static": false,
+    "signature": "float climbSpeed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "requiredTag",
+    "type": "string",
+    "static": false,
+    "signature": "string requiredTag",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelStreamer",
+  "simple": "LevelStreamer",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Draw zones for a level's rooms, and objects switched off while far away.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "zones",
+    "type": "string",
+    "static": false,
+    "signature": "string zones",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "\"minX,minY,minZ,maxX,maxY,maxZ;...\" - the Level Generator fills this in."
+   },
+   {
+    "kind": "field",
+    "name": "neighbours",
+    "type": "string",
+    "static": false,
+    "signature": "string neighbours",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "\"0:1,2;1:0\" - the zones seen from each zone."
+   },
+   {
+    "kind": "field",
+    "name": "useZones",
+    "type": "bool",
+    "static": false,
+    "signature": "bool useZones",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "streamed",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> streamed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Objects switched off beyond |streamDistance| from the player (or camera)."
+   },
+   {
+    "kind": "field",
+    "name": "streamDistance",
+    "type": "float",
+    "static": false,
+    "signature": "float streamDistance",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "checkInterval",
+    "type": "float",
+    "static": false,
+    "signature": "float checkInterval",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Seconds between distance checks."
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "ApplyZones",
+    "type": "void",
+    "static": false,
+    "signature": "void ApplyZones()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "OnDestroy",
+    "type": "void",
+    "static": false,
+    "signature": "override void OnDestroy()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelHazard",
+  "simple": "LevelHazard",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "A trap: hurts whatever has Health inside its box while it is on.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "kind",
+    "type": "int",
+    "static": false,
+    "signature": "int kind",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0 spikes, 1 fire, 2 laser, 3 toxic pool, 4 toxic water."
+   },
+   {
+    "kind": "field",
+    "name": "damage",
+    "type": "float",
+    "static": false,
+    "signature": "float damage",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Per hit (spikes, lasers) or per second (fire, toxic)."
+   },
+   {
+    "kind": "field",
+    "name": "size",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 size",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The box it hurts in, metres, standing on this object (world axes)."
+   },
+   {
+    "kind": "field",
+    "name": "onTime",
+    "type": "float",
+    "static": false,
+    "signature": "float onTime",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Seconds on, then off. Off 0: always on."
+   },
+   {
+    "kind": "field",
+    "name": "offTime",
+    "type": "float",
+    "static": false,
+    "signature": "float offTime",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "phase",
+    "type": "float",
+    "static": false,
+    "signature": "float phase",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Seconds into the cycle it starts (so neighbours take turns)."
+   },
+   {
+    "kind": "field",
+    "name": "movingPart",
+    "type": "GameObject",
+    "static": false,
+    "signature": "GameObject movingPart",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "What shows it is on: spikes rise, flames and beams appear."
+   },
+   {
+    "kind": "field",
+    "name": "riseHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float riseHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Spikes: how far they rise."
+   },
+   {
+    "kind": "field",
+    "name": "requiredTag",
+    "type": "string",
+    "static": false,
+    "signature": "string requiredTag",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Only these are hurt (empty: anything with Health)."
+   },
+   {
+    "kind": "field",
+    "name": "isOn",
+    "type": "bool",
+    "static": false,
+    "signature": "bool isOn",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelPuzzle",
+  "simple": "LevelPuzzle",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "Interactable",
+  "summary": "A puzzle that opens a door: levers in order, every switch on, or a code on a keypad.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "mode",
+    "type": "int",
+    "static": false,
+    "signature": "int mode",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0 lever sequence, 1 every switch on, 2 door code (this object is the keypad)."
+   },
+   {
+    "kind": "field",
+    "name": "levers",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> levers",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "order",
+    "type": "string",
+    "static": false,
+    "signature": "string order",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Lever sequence: the levers' numbers in the order they must be pulled, \"2,3,1\"."
+   },
+   {
+    "kind": "field",
+    "name": "code",
+    "type": "string",
+    "static": false,
+    "signature": "string code",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Door code: the digits."
+   },
+   {
+    "kind": "field",
+    "name": "door",
+    "type": "GameObject",
+    "static": false,
+    "signature": "GameObject door",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The door it opens (a Door: unlocked and opened)."
+   },
+   {
+    "kind": "field",
+    "name": "onSolvedTargets",
+    "type": "List<GameObject>",
+    "static": false,
+    "signature": "List<GameObject> onSolvedTargets",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "onSolvedMessage",
+    "type": "string",
+    "static": false,
+    "signature": "string onSolvedMessage",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "solved",
+    "type": "bool",
+    "static": false,
+    "signature": "bool solved",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "entry",
+    "type": "string",
+    "static": false,
+    "signature": "string entry",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "typing",
+    "type": "bool",
+    "static": false,
+    "signature": "bool typing",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Prompt",
+    "type": "string",
+    "static": false,
+    "signature": "override string Prompt(Interactor who)",
+    "params": [
+     {
+      "name": "who",
+      "type": "Interactor",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "CanInteract",
+    "type": "bool",
+    "static": false,
+    "signature": "override bool CanInteract(Interactor who, out string reason)",
+    "params": [
+     {
+      "name": "who",
+      "type": "Interactor",
+      "default": null
+     },
+     {
+      "name": "reason",
+      "type": "out string",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Interact",
+    "type": "void",
+    "static": false,
+    "signature": "override void Interact(Interactor who)",
+    "params": [
+     {
+      "name": "who",
+      "type": "Interactor",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Solve",
+    "type": "void",
+    "static": false,
+    "signature": "void Solve()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Opens the door now (the puzzle's done)."
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelCheckpoint",
+  "simple": "LevelCheckpoint",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Where the player comes back after dying (Player Respawn); heals on arrival.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "radius",
+    "type": "float",
+    "static": false,
+    "signature": "float radius",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "heal",
+    "type": "bool",
+    "static": false,
+    "signature": "bool heal",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "requiredTag",
+    "type": "string",
+    "static": false,
+    "signature": "string requiredTag",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "reached",
+    "type": "bool",
+    "static": false,
+    "signature": "bool reached",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "property",
+    "name": "current",
+    "type": "LevelCheckpoint",
+    "static": true,
+    "signature": "static LevelCheckpoint current { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The last checkpoint reached."
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Reach",
+    "type": "void",
+    "static": false,
+    "signature": "void Reach()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Makes this the place the player comes back to."
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "Readable",
+  "simple": "Readable",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "Interactable",
+  "summary": "A note, a log, a sign: E to read it.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "title",
+    "type": "string",
+    "static": false,
+    "signature": "string title",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "text",
+    "type": "string",
+    "static": false,
+    "signature": "string text",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "closeDistance",
+    "type": "float",
+    "static": false,
+    "signature": "float closeDistance",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "open",
+    "type": "bool",
+    "static": false,
+    "signature": "bool open",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "read",
+    "type": "bool",
+    "static": false,
+    "signature": "bool read",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Prompt",
+    "type": "string",
+    "static": false,
+    "signature": "override string Prompt(Interactor who)",
+    "params": [
+     {
+      "name": "who",
+      "type": "Interactor",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Point",
+    "type": "Vector3",
+    "static": false,
+    "signature": "override Vector3 Point()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Interact",
+    "type": "void",
+    "static": false,
+    "signature": "override void Interact(Interactor who)",
+    "params": [
+     {
+      "name": "who",
+      "type": "Interactor",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "LevelMinimap",
+  "simple": "LevelMinimap",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "A map of a generated level in a corner of the screen; M shows the whole floor.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "cells",
+    "type": "string",
+    "static": false,
+    "signature": "string cells",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Per floor (\"|\" between floors): runs of open cells \"x,z,length,cell;...\" - cell is a room number, -2 a corridor. The Level Generator fills this in."
+   },
+   {
+    "kind": "field",
+    "name": "originX",
+    "type": "float",
+    "static": false,
+    "signature": "float originX",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The world position of cell (0, 0)'s corner."
+   },
+   {
+    "kind": "field",
+    "name": "originZ",
+    "type": "float",
+    "static": false,
+    "signature": "float originZ",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "floorHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float floorHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "corner",
+    "type": "int",
+    "static": false,
+    "signature": "int corner",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0 top left, 1 top right, 2 bottom left, 3 bottom right."
+   },
+   {
+    "kind": "field",
+    "name": "size",
+    "type": "float",
+    "static": false,
+    "signature": "float size",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "range",
+    "type": "float",
+    "static": false,
+    "signature": "float range",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Metres shown across."
+   },
+   {
+    "kind": "field",
+    "name": "reveal",
+    "type": "bool",
+    "static": false,
+    "signature": "bool reveal",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Rooms appear once visited."
+   },
+   {
+    "kind": "field",
+    "name": "markers",
+    "type": "string",
+    "static": false,
+    "signature": "string markers",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "\"kind,x,z,floor;...\" - exit, key, objective, checkpoint."
+   },
+   {
+    "kind": "field",
+    "name": "showFullMapKey",
+    "type": "bool",
+    "static": false,
+    "signature": "bool showFullMapKey",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   }
+  ],
+  "file": "LevelGen.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
   "name": "MovingPlatform",
   "simple": "MovingPlatform",
   "kind": "class",
@@ -48149,6 +50357,533 @@
    }
   ],
   "file": "Mechanisms.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "FirstPersonController",
+  "simple": "FirstPersonController",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "",
+  "members": [
+   {
+    "kind": "field",
+    "name": "walkSpeed",
+    "type": "float",
+    "static": false,
+    "signature": "float walkSpeed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Movement"
+   },
+   {
+    "kind": "field",
+    "name": "sprintSpeed",
+    "type": "float",
+    "static": false,
+    "signature": "float sprintSpeed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "crouchSpeed",
+    "type": "float",
+    "static": false,
+    "signature": "float crouchSpeed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "acceleration",
+    "type": "float",
+    "static": false,
+    "signature": "float acceleration",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "jumpHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float jumpHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "gravity",
+    "type": "float",
+    "static": false,
+    "signature": "float gravity",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "airControl",
+    "type": "float",
+    "static": false,
+    "signature": "float airControl",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "0..1: how much the keys still steer in the air."
+   },
+   {
+    "kind": "field",
+    "name": "canCrouch",
+    "type": "bool",
+    "static": false,
+    "signature": "bool canCrouch",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "crouchHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float crouchHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "The Character Controller's height while crouched."
+   },
+   {
+    "kind": "field",
+    "name": "cameraObject",
+    "type": "GameObject",
+    "static": false,
+    "signature": "GameObject cameraObject",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Camera"
+   },
+   {
+    "kind": "field",
+    "name": "eyeHeight",
+    "type": "float",
+    "static": false,
+    "signature": "float eyeHeight",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Metres from the feet to the eyes, standing."
+   },
+   {
+    "kind": "field",
+    "name": "mouseSensitivity",
+    "type": "float",
+    "static": false,
+    "signature": "float mouseSensitivity",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "minPitch",
+    "type": "float",
+    "static": false,
+    "signature": "float minPitch",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "maxPitch",
+    "type": "float",
+    "static": false,
+    "signature": "float maxPitch",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "fieldOfView",
+    "type": "float",
+    "static": false,
+    "signature": "float fieldOfView",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "lockCursor",
+    "type": "bool",
+    "static": false,
+    "signature": "bool lockCursor",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "headBob",
+    "type": "bool",
+    "static": false,
+    "signature": "bool headBob",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "bobAmount",
+    "type": "float",
+    "static": false,
+    "signature": "float bobAmount",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "bobSpeed",
+    "type": "float",
+    "static": false,
+    "signature": "float bobSpeed",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "input",
+    "type": "StdInput",
+    "static": false,
+    "signature": "StdInput input",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "State (read by your scripts; the tests drive |input|)"
+   },
+   {
+    "kind": "field",
+    "name": "yaw",
+    "type": "float",
+    "static": false,
+    "signature": "float yaw",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "pitch",
+    "type": "float",
+    "static": false,
+    "signature": "float pitch",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "velocity",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 velocity",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "crouching",
+    "type": "bool",
+    "static": false,
+    "signature": "bool crouching",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "crouchInput",
+    "type": "bool",
+    "static": false,
+    "signature": "bool crouchInput",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Set by tests: crouch held."
+   },
+   {
+    "kind": "property",
+    "name": "isGrounded",
+    "type": "bool",
+    "static": false,
+    "signature": "bool isGrounded { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "property",
+    "name": "eyePosition",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 eyePosition { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "Where the eyes are now."
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "OnDisable",
+    "type": "void",
+    "static": false,
+    "signature": "override void OnDisable()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "LateUpdate",
+    "type": "void",
+    "static": false,
+    "signature": "override void LateUpdate()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Teleport",
+    "type": "void",
+    "static": false,
+    "signature": "void Teleport(Vector3 pos, float yawDegrees)",
+    "params": [
+     {
+      "name": "pos",
+      "type": "Vector3",
+      "default": null
+     },
+     {
+      "name": "yawDegrees",
+      "type": "float",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "Puts the player at |pos| (its feet) at once, facing |yawDegrees| (a respawn)."
+   }
+  ],
+  "file": "Player.cs",
+  "source": "Package:Standard",
+  "parent": null,
+  "enumValues": null,
+  "public": true
+ },
+ {
+  "name": "PlayerRespawn",
+  "simple": "PlayerRespawn",
+  "kind": "class",
+  "namespace": "Elintria.Standard",
+  "modifiers": [],
+  "base": "ElintriaScript",
+  "summary": "Respawns the player when its Health runs out, and draws a health bar.",
+  "members": [
+   {
+    "kind": "field",
+    "name": "respawnDelay",
+    "type": "float",
+    "static": false,
+    "signature": "float respawnDelay",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "showHealthBar",
+    "type": "bool",
+    "static": false,
+    "signature": "bool showHealthBar",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "deathText",
+    "type": "string",
+    "static": false,
+    "signature": "string deathText",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "spawnPoint",
+    "type": "Vector3",
+    "static": false,
+    "signature": "Vector3 spawnPoint",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Where the player comes back: set by Level Checkpoints (the start until then)."
+   },
+   {
+    "kind": "field",
+    "name": "spawnYaw",
+    "type": "float",
+    "static": false,
+    "signature": "float spawnYaw",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "field",
+    "name": "deaths",
+    "type": "int",
+    "static": false,
+    "signature": "int deaths",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "property",
+    "name": "current",
+    "type": "PlayerRespawn",
+    "static": true,
+    "signature": "static PlayerRespawn current { get; }",
+    "params": [],
+    "readonly": true,
+    "protected": false,
+    "summary": "The player's respawn (the last one to start)."
+   },
+   {
+    "kind": "method",
+    "name": "Start",
+    "type": "void",
+    "static": false,
+    "signature": "override void Start()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "SetCheckpoint",
+    "type": "void",
+    "static": false,
+    "signature": "void SetCheckpoint(Vector3 position, float yawDegrees)",
+    "params": [
+     {
+      "name": "position",
+      "type": "Vector3",
+      "default": null
+     },
+     {
+      "name": "yawDegrees",
+      "type": "float",
+      "default": null
+     }
+    ],
+    "readonly": false,
+    "protected": false,
+    "summary": "A checkpoint: come back here from now on."
+   },
+   {
+    "kind": "method",
+    "name": "Update",
+    "type": "void",
+    "static": false,
+    "signature": "override void Update()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": ""
+   },
+   {
+    "kind": "method",
+    "name": "Respawn",
+    "type": "void",
+    "static": false,
+    "signature": "void Respawn()",
+    "params": [],
+    "readonly": false,
+    "protected": false,
+    "summary": "Back at the spawn point at full health, now."
+   }
+  ],
+  "file": "Player.cs",
   "source": "Package:Standard",
   "parent": null,
   "enumValues": null,
