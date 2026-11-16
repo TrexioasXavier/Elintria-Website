@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Elintria">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9b7bff"/>
+      <stop offset=".55" stop-color="#5b8cff"/>
+      <stop offset="1" stop-color="#2fd3e8"/>
+    </linearGradient>
+    <linearGradient id="h" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 3 57 17.5v29L32 61 7 46.5v-29Z" fill="url(#g)"/>
+  <path d="M32 3 57 17.5 32 32 7 17.5Z" fill="url(#h)"/>
+  <path d="M22 19h21v6H29v4.5h12v6H29V40h14v6H22Z" fill="#fff"/>
+</svg>
