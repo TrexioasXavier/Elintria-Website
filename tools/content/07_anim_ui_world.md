@@ -788,7 +788,7 @@ public class ScoreTable : ElintriaScript
 ```
 
 # UIRuntime
-summary: The live state of canvases made in the UI editor: set text, show or hide elements, read clicks and fill bars.
+summary: The live state of the UI made in the UI Designer: set text, show or hide elements, read clicks, fill bars, and drive dropdowns, minimaps and inventory grids.
 see: ScreenGUI
 
 When you design UI in the editor's UI tools, `UIRuntime` is how scripts talk to it, by element name. Set a label's text, show or hide elements or whole groups, read button clicks, drive a bar's fill, and override how an element is drawn.
@@ -802,8 +802,8 @@ SetGroupVisible: Shows or hides every element whose name starts with `prefix`, s
 WasClicked: True once for each click on the element; reading it clears the click.
 SetFill: Sets a bar or slider element's fill, 0..1.
 GetFill: The fill set from code, or -1 if none was set.
-SetProp: Overrides how an element is drawn: "color" ("r,g,b,a"), "sprite" (an image path), "off" ("1" hides its own graphic).
-@key: The property: "color", "sprite", "off" or "galpha".
+SetProp: Overrides how an element is drawn: "color" ("r,g,b,a"), "sprite" (an image path), "off" ("1" hides its own graphic), "fontSize"; and the UI Designer widgets' live state: "sel" (a dropdown's, tab bar's or radial menu's picked index), "mapx", "mapy" (a minimap's centre, 0..1) and "maprot" (degrees), "slot3" (an inventory grid slot's image) and "count3" (its count).
+@key: The property: "color", "sprite", "off", "galpha", "fontSize", "sel", "mapx", "mapy", "maprot", "slotN" or "countN".
 GetProp: Reads a property set with SetProp.
 
 ## Example: Driving a designed HUD
@@ -853,6 +853,41 @@ public class DesignedPause : ElintriaScript
         bool show = !UIRuntime.IsVisible("Pause_Panel");
         UIRuntime.SetGroupVisible("Pause_", show);
         Time.timeScale = show ? 0f : 1f;
+    }
+}
+```
+
+## Example: Minimap, inventory grid and dropdown
+file: Scripts/DesignedWidgets.cs
+```csharp
+using Elintria;
+using System.Globalization;
+
+public class DesignedWidgets : ElintriaScript
+{
+    public Transform player;
+    public float worldSize = 200f;
+    public string[] items = { "Images/sword.png", "Images/potion.png" };
+    public int[] counts = { 1, 5 };
+
+    public override void Update()
+    {
+        // The minimap follows the player and turns with them.
+        if (player != null)
+        {
+            UIRuntime.SetProp("Minimap", "mapx", (0.5f + player.position.x / worldSize).ToString(CultureInfo.InvariantCulture));
+            UIRuntime.SetProp("Minimap", "mapy", (0.5f - player.position.z / worldSize).ToString(CultureInfo.InvariantCulture));
+            UIRuntime.SetProp("Minimap", "maprot", player.eulerAngles.y.ToString(CultureInfo.InvariantCulture));
+        }
+        // The bag's pictures and counts, slot by slot.
+        for (int i = 0; i < items.Length; ++i)
+        {
+            UIRuntime.SetProp("Bag", "slot" + i, items[i]);
+            UIRuntime.SetProp("Bag", "count" + i, counts[i].ToString());
+        }
+        // Which option the dropdown shows.
+        if (UIRuntime.WasClicked("Quality"))
+            Debug.Log("Quality option " + UIRuntime.GetProp("Quality", "sel"));
     }
 }
 ```

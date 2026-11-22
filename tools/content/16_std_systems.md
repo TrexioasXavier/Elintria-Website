@@ -1219,6 +1219,10 @@ Marker: A marker for this frame only (a quest step uses it).
 @world: Where.
 @color: Its colour.
 @distance: Metres away to write (-1: none).
+FrameMarkers: Fills lists with this frame's markers from Marker (the Compass Bar reads them); returns how many.
+@points: Where they are.
+@colors: Their colours.
+@distances: Their distances.
 DrawMarker: Draws a marker on the point, or at the screen's edge pointing to it.
 @label: A label.
 

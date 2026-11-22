@@ -380,6 +380,14 @@ IsExternal: Whether something else is moving it now.
 Facing: Where it looks, flat (the camera's way in first and third person).
 Look: The full look direction, with pitch.
 MoveInput: The WASD keys as a world direction relative to the facing, length 0..1.
+HasController: Whether it has a First Person, Third Person or Top Down controller.
+JumpHeight: The controller's jump height, metres (0 when it has none).
+SetJumpHeight: Sets the controller's jump height (Gravity Zones raise it where gravity is weak).
+@h: Metres.
+SetGravity: Sets the controller's gravity (Gravity Zones).
+@gravity: Metres a second squared.
+Launch: Throws the character with a velocity, lifting it off the floor first so a grounded controller does not pin it back down.
+@velocity: The velocity.
 Gravity: The controller's gravity.
 Grounded: On the ground.
 Key: A key by name ("Alt", "F", "Space"); KeyCode.None when unknown.

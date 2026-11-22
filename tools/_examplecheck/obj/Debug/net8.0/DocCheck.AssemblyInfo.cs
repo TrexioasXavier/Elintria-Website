@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DocCheck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee01cdddb5d149667382be191df7a88fc14d783a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc7840ea7c89bb033ddf45db32fa25f9941018ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("DocCheck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DocCheck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1076,6 +1076,14 @@ Set: From |a| to |b|, |width| metres across.
 @b: The other end.
 @width: Metres across.
 visible: Drawn or not.
+SetBox: A box with its middle at a point, its sides along three directions, a size across them.
+@centre: The middle.
+@right: Its sideways direction.
+@up: Its up direction.
+@forward: Its forward direction.
+@size: Metres across each direction.
+SetColor: A new colour (a build preview turning red).
+@color: The colour.
 Destroy: Removes it (call it in OnDestroy).
 
 ## Example: A laser sight

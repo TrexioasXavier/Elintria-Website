@@ -1240,6 +1240,8 @@ see: Json, Project, manual-files
 
 A built game packs its assets into an encrypted `Game.econtent` bundle, which `System.IO` cannot open. `Content` reads files the same way everywhere: from the bundle in a build, from disk in the editor. Pass project-relative paths such as `"Assets/Data/items.json"`.
 
+DLC: a game can take more bundles made for it (Build Settings > DLC), which it mounts on top of its own from the `DLC` folder beside `Game.exe` as it starts, or when a script calls `MountBundle`. A DLC's files are then read like the game's, its scenes load by name, and its scripts can be used. `Bundles` lists the DLC mounted, and `BundleOf` tells which one a file comes from.
+
 ## Example: Loading a JSON data file
 file: Scripts/ShopData.cs
 ```csharp
@@ -1302,6 +1304,47 @@ public class AsciiLevel : ElintriaScript
                     GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     wall.transform.position = new Vector3(x, 0.5f, -z);
                 }
+    }
+}
+```
+
+
+## Members
+MountBundle: Mounts a DLC bundle built for this game, on top of the game's own content, and loads its scripts. A path not rooted is taken from the game's folder. False when it cannot: a file built for another project, a renamed one, a damaged one, or the editor (which reads the project instead).
+@path: The bundle, such as `"DLC/Expansion"` (".econtent" may be left off).
+@error: Why it did not mount.
+UnmountBundle: Takes a DLC away again; what was loaded from it stays loaded.
+@name: The DLC's name (its file name without .econtent).
+Bundles: The DLC mounted now, oldest first.
+BundleErrors: Why a DLC beside the game did not mount at start, one "Name: reason" each.
+BundleOf: Where a file is read from: "Game", a DLC's name, or "" for disk.
+SupportsBundles: True when this game was built able to open DLC.
+IsMounted: Whether the DLC called `name` is mounted.
+BundleMounted: Raised after a DLC mounts and its scripts are loaded.
+BundleUnmounted: Raised after a DLC is unmounted.
+
+## Example: Mounting a downloaded DLC
+file: Scripts/DlcMenu.cs
+```csharp
+using Elintria;
+
+public class DlcMenu : ElintriaScript
+{
+    public override void Start()
+    {
+        Content.BundleMounted += name => Debug.Log("DLC ready: " + name);
+        foreach (string dlc in Content.Bundles) Debug.Log("Installed: " + dlc);
+        foreach (string why in Content.BundleErrors) Debug.LogWarning("Not loaded: " + why);
+    }
+
+    public override void Update()
+    {
+        if (!Input.GetKeyDown(KeyCode.F5)) return;
+        string error;
+        if (Content.MountBundle("DLC/Expansion", out error))
+            SceneManager.LoadScene("ExpansionHub");
+        else
+            Debug.LogWarning("Could not load the expansion: " + error);
     }
 }
 ```
