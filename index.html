@@ -18,6 +18,7 @@
     <a class="brand" href="./"><img src="assets/img/logo.svg" alt=""><span class="full">Elintria Engine</span></a>
     <nav class="links">
       <a href="#features">Features</a>
+      <a href="#themes">Themes</a>
       <a href="#scripting">Scripting</a>
       <a href="#download">Download</a>
       <a href="docs/">Documentation</a>
@@ -35,7 +36,7 @@
   <main>
     <section class="hero">
       <div class="hero-grid"></div>
-      <span class="pill"><b>New</b> UI Designer, command palette and rebindable shortcuts</span>
+      <span class="pill"><b>New</b> Editor themes, a material editor and a new splash screen</span>
       <h1><span class="grad">Build worlds.<br>Script them your way.</span></h1>
       <p class="lead">Elintria Engine is a game engine and editor for Windows. Its editor follows Unity's layout. You write your game in C# or C++, and every engine system can be reached from a script.</p>
       <div class="cta">
@@ -90,6 +91,61 @@ public class Spinner : ElintriaScript
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9Z"/></svg></div><h3>Ready-made gameplay</h3><p>The Standard package: character controllers, enemies, weapons and throwables, saving, quests, shops, HUDs, building, farming and tower defense. A Level Generator lays out whole levels with them.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg></div><h3>Plugins</h3><p>ProBuilder for blocking out levels and building low-poly characters, a Unity project converter, and a Half-Life map loader. Add your own editor windows and menu items in C#.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7Z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg></div><h3>One-click builds</h3><p>Ship a standalone game with its assets packed into an encrypted bundle, plus DLC bundles that add content later. Build from the command line or a cloud workflow, and upload to Steam.</p></div>
+          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/><circle cx="9" cy="9" r="2"/></svg></div><h3>Materials</h3><p>Create a material from the Project window and edit it in the Inspector: shader, rendering mode, base colour and map, metallic, smoothness, emission, tiling and scrolling. Drag it onto an object in the Scene view, the Hierarchy or a Mesh Renderer slot. Changes show while you drag a slider.</p></div>
+          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>Prefabs</h3><p>Drag an object from the Hierarchy into the Project window to make a prefab. Place copies, apply changes back or unpack them, and drop prefabs into a script's object fields.</p></div>
+          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4"/><path d="m9 10 2 2 4-4"/></svg></div><h3>A splash screen that's yours</h3><p>A built game opens with the Elintria logo over a soft glow, then your own logo. Choose the animation, colours and a background picture, and preview it in Project Settings. The Player settings also cover the window title, a start-maximized option, an FPS counter, a background frame-rate cap and single-instance launching.</p></div>
+          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h5l2 2h11v10H3z"/><path d="M8 14h8"/></svg></div><h3>Tidy projects</h3><p>A new project starts with only Scenes and Shaders. The Project window leaves out Visual Studio solutions, compiled DLLs, debug files and the engine's working folders. They are still there for compiling and building, just out of sight. Unity projects convert with their scenes, prefabs, UI and materials, and big scenes load in parallel and draw in batches.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="block" id="themes">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Make it yours</span>
+          <h2>Three themes built in. Make as many more as you like.</h2>
+          <p>The whole editor changes with its theme: the window, menus, tabs and buttons, the Hierarchy and Inspector, the Project window and Console, the code editor and the node graphs. Pick one in Edit &rarr; Themes, or under Preferences.</p>
+        </div>
+
+        <div class="theme-tabs" role="tablist" aria-label="Editor themes">
+          <button class="theme-tab" role="tab" aria-selected="true" data-theme-shot="dark"><span class="sw dark"></span>Dark</button>
+          <button class="theme-tab" role="tab" aria-selected="false" data-theme-shot="space"><span class="sw space"></span>Space</button>
+          <button class="theme-tab" role="tab" aria-selected="false" data-theme-shot="neon"><span class="sw neon"></span>Neon</button>
+        </div>
+
+        <div class="theme-stage">
+          <div class="window-bar"><i></i><i></i><i></i><span id="theme-caption">Elintria Engine &mdash; Dark theme</span></div>
+          <div class="theme-shots">
+            <img class="on" data-shot="dark" src="assets/img/screens/theme-dark.jpg" alt="The Elintria editor in the Dark theme: grey panels with blue accents around a scene of coloured shapes" width="1600" height="836">
+            <img data-shot="space" src="assets/img/screens/theme-space.jpg" alt="The Elintria editor in the Space theme: see-through purple panels over a planet, a nebula and a spiral galaxy" width="1600" height="836" loading="lazy">
+            <img data-shot="neon" src="assets/img/screens/theme-neon.jpg" alt="The Elintria editor in the Neon theme: near-black panels outlined in glowing cyan with magenta highlights" width="1600" height="836" loading="lazy">
+          </div>
+        </div>
+
+        <div class="theme-notes">
+          <div class="theme-note on" data-theme-shot="dark"><h3><span class="sw dark"></span>Dark</h3><p>The default look: calm blue-grey panels and a blue accent, built for long sessions and familiar if you come from Unity.</p></div>
+          <div class="theme-note" data-theme-shot="space"><h3><span class="sw space"></span>Space</h3><p>Deep violet glass. A ringed planet fills the window behind see-through panels, with a nebula behind the Hierarchy and a spiral galaxy behind the Project window.</p></div>
+          <div class="theme-note" data-theme-shot="neon"><h3><span class="sw neon"></span>Neon</h3><p>Near-black with light in it: cyan outlines every panel, magenta marks focus and selection, and the code editor uses bright neon syntax colours.</p></div>
+        </div>
+
+        <div class="split custom-themes">
+          <div>
+            <span class="eyebrow">Custom themes</span>
+            <h2>Design your own theme</h2>
+            <p>Click <b>New Theme</b> to start from the one you're using, then change anything you like. Your themes sit next to the built-in ones and switch in one click.</p>
+            <ul class="checks">
+              <li>Every colour in the editor, around a hundred, grouped by area: window, text, tabs, buttons, fields, lists, Hierarchy, Inspector, Project, Console, code editor, Shader Graph and node graphs</li>
+              <li>Your own pictures behind the whole window and behind each area, with opacity, fit (cover, fit inside, stretch, centre or tile) and a tint</li>
+              <li>See-through panels: give a panel colour some transparency and your picture shows through</li>
+              <li>Duplicate, rename and delete your themes. Dark, Space and Neon can be adjusted and reset, but never deleted</li>
+              <li>Each theme is a folder with its pictures, so you can share it by copying the folder</li>
+            </ul>
+          </div>
+          <figure class="shot-frame" style="margin:0">
+            <img src="assets/img/screens/themes-editor.jpg?v=2" alt="Preferences, Themes page: theme cards for Dark, Space and Neon, a New Theme button, and picture settings for each part of the editor" width="821" height="560" loading="lazy">
+            <figcaption>Preferences &rarr; Themes: pick a theme, make a new one, set pictures and colours.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -169,6 +225,22 @@ public class Turret : ElintriaScript
     </div>
   </footer>
 
+  <script>
+    // Themes: the tabs and the notes switch the screenshot.
+    (function () {
+      var names = { dark: "Dark", space: "Space", neon: "Neon" };
+      function show(k) {
+        document.querySelectorAll(".theme-shots img").forEach(function (i) { i.classList.toggle("on", i.getAttribute("data-shot") === k); });
+        document.querySelectorAll(".theme-tab[data-theme-shot]").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-theme-shot") === k ? "true" : "false"); });
+        document.querySelectorAll(".theme-note").forEach(function (n) { n.classList.toggle("on", n.getAttribute("data-theme-shot") === k); });
+        var c = document.getElementById("theme-caption");
+        if (c) c.textContent = "Elintria Engine \u2014 " + names[k] + " theme";
+      }
+      document.querySelectorAll("[data-theme-shot]").forEach(function (el) {
+        el.addEventListener("click", function () { show(el.getAttribute("data-theme-shot")); });
+      });
+    })();
+  </script>
   <script src="assets/js/highlight.js"></script>
   <script>
     document.querySelectorAll("pre.code[data-lang]").forEach(function (p) {
