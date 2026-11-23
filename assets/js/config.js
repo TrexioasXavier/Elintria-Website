@@ -1,4 +1,6 @@
-/* Site-wide settings. Change these when the hosting or the download moves. */
+/* Site-wide settings. Change these when the hosting or the download moves -
+   and bump the ?v= on this file in index.html and docs/index.html, or
+   visitors keep their cached copy for a while. */
 window.ELINTRIA_SITE = {
   name: "Elintria Engine",
   version: "2026.11",
