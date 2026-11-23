@@ -3,7 +3,7 @@ window.ELINTRIA_SITE = {
   name: "Elintria Engine",
   version: "2026.11",
   // The engine's GitHub repository. Its Releases page carries the engine download.
-  repo: "https://github.com/TrexioasXavier/ElintriaGameEngine",
+  repo: "https://github.com/TrexioasXavier/Elintria-Website",
   // The newest release (GitHub redirects /releases/latest to it).
   download: "https://github.com/TrexioasXavier/Elintria-Website/releases/latest",
   releases: "https://github.com/TrexioasXavier/Elintria-Website/releases",
