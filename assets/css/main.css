@@ -364,6 +364,10 @@ body.docs { min-height: 100vh; }
   font-size: .88em; padding: 2px 6px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
 }
 .article a code { color: var(--accent-text); }
+.doc-shot { margin: 20px 0; }
+.doc-shot img { display: block; max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); }
+.doc-shot figcaption { margin-top: 8px; color: var(--text-2); font-size: 13.5px; }
+.feature p a { color: var(--accent-text); }
 .callout { display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); margin: 18px 0; color: var(--text-2); font-size: 14.5px; }
 .callout svg { width: 20px; height: 20px; flex: none; color: var(--accent-text); margin-top: 2px; }
 .callout.warn svg { color: var(--warn); }

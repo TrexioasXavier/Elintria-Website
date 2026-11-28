@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css?v=20261123">
-  <script src="assets/js/theme.js?v=20261123"></script>
-  <script src="assets/js/config.js?v=20261123"></script>
+  <link rel="stylesheet" href="assets/css/main.css?v=20261128">
+  <script src="assets/js/theme.js?v=20261128"></script>
+  <script src="assets/js/config.js?v=20261128"></script>
 </head>
 <body>
   <header class="topnav">
@@ -85,7 +85,7 @@ public class Spinner : ElintriaScript
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M3 21h18"/></svg></div><h3>Terrain, foliage and water</h3><p>Sculpt and paint heightmap terrain. Paint grass that bends in the wind, place trees, add water with waves, shore foam and buoyancy, and build roads from splines.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6l-4 8M12 13l4 8M6 10h12"/></svg></div><h3>Animation and IK</h3><p>An Animator with state machines and blend trees, plus an Animation window. Skinned FBX models, look-at IK, two-bone IK, foot IK and ragdolls.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-2h12v2"/></svg></div><h3>AI that thinks</h3><p>Behaviour trees with utility scoring, navigation meshes with crowds and off-mesh links, and ML agents you can train inside the editor.</p></div>
-          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="m7 11 10-5M7 13l10 5"/></svg></div><h3>Multiplayer</h3><p>A host-authoritative netcode layer with client prediction, network variables and RPCs. It connects over LAN, a relay, or Steam.</p></div>
+          <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="m7 11 10-5M7 13l10 5"/></svg></div><h3>Multiplayer</h3><p>The ENetworking package: host, join or run a dedicated server over LAN, an internet relay with room codes, or Steam. Player spawning, synced movement, a connect menu, RPCs and network variables. <a href="docs/#/manual-multiplayer">Tutorial</a></p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg></div><h3>Procedural tools</h3><p>Noise, Poisson-disk sampling, dungeon and cave generators, wave function collapse and L-systems, all callable from your scripts.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg></div><h3>Game UI designer</h3><p>Design menus and HUDs in a dockable UI Designer: 15 widget types, anchors and layout groups, themes, prefabs and ready-made screens. Wire buttons and bind bars to script values without code, and animate it all.</p></div>
           <div class="feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9Z"/></svg></div><h3>Ready-made gameplay</h3><p>The Standard package: character controllers, enemies, weapons and throwables, saving, quests, shops, HUDs, building, farming and tower defense. A Level Generator lays out whole levels with them.</p></div>
@@ -147,6 +147,29 @@ public class Spinner : ElintriaScript
             <figcaption>Preferences &rarr; Themes: pick a theme, make a new one, set pictures and colours.</figcaption>
           </figure>
         </div>
+      </div>
+    </section>
+
+    <section class="block" id="multiplayer">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">Multiplayer</span>
+          <h2>Two players, anywhere in the world</h2>
+          <p>The <b>ENetworking</b> package turns a scene into a multiplayer game with small components you set up in the Inspector, no code needed. One build can host, join, or run as a dedicated server.</p>
+          <ul class="checks">
+            <li><span><b>Network Setup</b>: host, join or serve, over LAN / direct IP, an internet relay with six-letter room codes (no port forwarding), or Steam</span></li>
+            <li><span><b>Network Player Spawner</b> and <b>Spawn Points</b>: each player gets their own character as they join</span></li>
+            <li><span><b>Networked Object</b>, <b>Network Sync Transform</b> and <b>Network Player Movement</b>: everyone moves their own character and sees the others move smoothly</span></li>
+            <li><span>A ready-made <b>Connect Menu</b>, <b>Status Display</b>, <b>Name Tags</b> and a <b>LAN Game Finder</b></span></li>
+            <li>RPCs and network variables for your own scripts</li>
+          </ul>
+          <a class="btn btn-primary" href="docs/#/manual-multiplayer">Read the two-player tutorial
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <figure class="shot-frame" style="margin:0">
+          <img src="assets/img/screens/net_room_code.jpg" alt="The Network Connect Menu after hosting: the room code to give a friend, and the status panel listing the players" width="649" height="600" loading="lazy">
+          <figcaption>Host, read out the room code, and your friend joins from anywhere.</figcaption>
+        </figure>
       </div>
     </section>
 

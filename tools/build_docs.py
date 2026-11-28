@@ -276,6 +276,8 @@ def inline(s):
         return '<a href="' + href + '"><code>' + label + "</code></a>"
     s = re.sub(r'\[\[([\w\.<>]+)(?:\|([^\]]+))?\]\]', link, s)
     s = re.sub(r'`([^`]+)`', lambda m: "<code>" + m.group(1) + "</code>", s)
+    # [text](https://...) - an outside link, opened in a new tab
+    s = re.sub(r'(?<!\[)\[([^\[\]]+)\]\((https?://[^)\s]+)\)', r'<a href="\2" target="_blank" rel="noopener">\1</a>', s)
     s = re.sub(r'\*\*([^*]+)\*\*', r'<b>\1</b>', s)
     s = re.sub(r'(?<![\w*])\*([^*\s][^*]*)\*(?![\w*])', r'<i>\1</i>', s)
     # auto-link bare known type names written as `Name` already handled; link plain CamelCase type names inside <code>
@@ -325,6 +327,13 @@ def block(text):
             flush()
             warn = m.group(1).lower() == "warning"
             out.append('<div class="callout' + (" warn" if warn else "") + '">' + (ICON_WARN if warn else ICON_INFO) + "<p>" + inline(m.group(2)) + "</p></div>")
+            i += 1; continue
+        m = re.match(r'^!\[(.*?)\]\((\S+?)\)$', s)
+        if m:
+            # ![caption](../assets/img/x.jpg): a screenshot with its caption
+            flush()
+            out.append('<figure class="doc-shot"><img src="' + html.escape(m.group(2)) + '" alt="' + html.escape(m.group(1)) +
+                       '" loading="lazy"><figcaption>' + inline(m.group(1)) + '</figcaption></figure>')
             i += 1; continue
         m = re.match(r'^(#{2,3})\s+(.*)$', s)
         if m:
